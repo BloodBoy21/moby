@@ -14,6 +14,11 @@ This is repository for scripts that work with docker cli.
   
   by default script will use ```-l``` option if no option is provided
 
+  Example:
+  ```bash
+  moby -s #will stop container selected by fzf
+  ```
+
 ### Moby-compose 🐳🖥️
   Command list for moby-compose cli
   - ```-u``` - up container
@@ -21,6 +26,11 @@ This is repository for scripts that work with docker cli.
   - ```-b``` - attach container to bash
   
   by default script will use ```-u``` option if no option is provided
+
+  Example:
+  ```bash
+  moby-compose -d #will down docker-compose file selected by fzf
+  ```
 
 ## Installation 
 ```bash
