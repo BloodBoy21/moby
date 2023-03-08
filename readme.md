@@ -11,15 +11,16 @@ This is repository for scripts that work with docker cli.
   - ```-r``` - restart container
   - ```-d``` - delete container
   - ```-b``` - attach container to bash
-by default script will use ```-l``` option if no option is provided
+  
+  by default script will use ```-l``` option if no option is provided
 
 ### Moby-compose 🐳🖥️
   Command list for moby-compose cli
   - ```-u``` - up container
   - ```-d``` - down container
   - ```-b``` - attach container to bash
-by default script will use ```-u``` option if no option is provided
-
+  
+  by default script will use ```-u``` option if no option is provided
 
 ## Installation 
 ```bash
