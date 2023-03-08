@@ -1,4 +1,11 @@
 #!/bin/bash
+
+#check if docker is installed
+if ! [ -x "$(command -v docker)" ]; then
+    echo "docker is not installed"
+    exit 1
+fi
+
 container=$( docker ps | awk '{print $2 ":" $1}'  | tail -n+2 |fzf)
 IFS=':' read -ra containerData <<< "$container"
 id=${containerData[1]}

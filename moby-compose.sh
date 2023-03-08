@@ -6,6 +6,12 @@ if [ -z "$file" ]; then
     exit 1
 fi
 
+#check if docker-compose is installed
+if ! [ -x "$(command -v docker-compose)" ]; then
+    echo "docker-compose is not installed"
+    exit 1
+fi
+
 flag=false
 while getopts ":udb" opt; do
   case $opt in
