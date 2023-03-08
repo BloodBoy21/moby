@@ -35,7 +35,7 @@ while getopts ":lbrsdh" opt; do
       flag=true
       ;;
     d)
-      docker rm $id 
+      dokcker stop $id && docker rm $id
       flag=true
       ;;
     h)
