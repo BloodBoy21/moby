@@ -1,5 +1,19 @@
 #!/bin/bash
-file=$(find . -type f \( -name "docker-compose*.yml" -o -name "docker-compose*.json" \) | fzf)
+
+customPath=${!#}
+echo $customPath 
+
+# Check if the variable contains a directory path
+if [ -d "$customPath" ]; then
+  dir=$customPath 
+else
+  dir="."
+fi
+
+file=$(find $dir  -type f \( -name "docker-compose*.yml" -o -name "docker-compose*.json" \) | fzf)
+
+
+
 
 if [ -z "$file" ]; then
     echo "No docker-compose file found"
