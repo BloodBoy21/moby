@@ -1,3 +1,4 @@
+#!/bin/bash
 file=$(find . -type f \( -name "docker-compose*.yml" -o -name "docker-compose*.json" \) | fzf)
 
 if [ -z "$file" ]; then
@@ -8,8 +9,8 @@ fi
 flag=false
 while getopts ":udb" opt; do
   case $opt in
-   u)
-   docker-compose -f $file up -d
+    u)
+    docker-compose -f $file up -d
       flag=true
       ;; 
     d)
@@ -20,6 +21,13 @@ while getopts ":udb" opt; do
         docker-compose -f $file build
         flag=true
         ;;
+    h)
+      echo "Usage: moby-compose.sh [-u] [-d] [-b]"
+      echo "  -u: up"
+      echo "  -d: down"
+      echo "  -b: build"
+      flag=true
+    ;;
     \?)
       echo "Invalid option: -$OPTARG" >&2
       exit 1

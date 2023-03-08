@@ -1,3 +1,4 @@
+#!/bin/bash
 container=$( docker ps | awk '{print $2 ":" $1}'  | tail -n+2 |fzf)
 IFS=':' read -ra containerData <<< "$container"
 id=${containerData[1]}
@@ -8,7 +9,7 @@ if [ -z "$id" ]; then
 fi
 
 flag=false
-while getopts ":lbrsd" opt; do
+while getopts ":lbrsdh" opt; do
   case $opt in
     l)
       docker logs -f $id 
@@ -30,6 +31,15 @@ while getopts ":lbrsd" opt; do
       docker rm $id 
       flag=true
       ;;
+    h)
+      echo "Usage: moby.sh [-l] [-b] [-r] [-s] [-d]"
+      echo "  -l: logs"
+      echo "  -b: bash"
+      echo "  -r: restart"
+      echo "  -s: stop"
+      echo "  -d: delete"
+      flag=true
+    ;;
     \?)
       echo "Invalid option: -$OPTARG" >&2
       exit 1
