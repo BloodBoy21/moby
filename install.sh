@@ -6,6 +6,10 @@ mobyCompose=$dir/moby-compose.sh
 chmod +x $moby
 chmod +x $mobyCompose
 
+# Install fzf
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+~/.fzf/install
+
 echo "Installing moby..."
 
 echo "alias moby=\"$moby\"" >> ~/.bashrc
