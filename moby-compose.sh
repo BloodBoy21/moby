@@ -26,7 +26,7 @@ if [ "$1" != "-h" ]; then
 fi
 
 flag=false
-while getopts ":udbh" opt; do
+while getopts ":udbhl" opt; do
   case $opt in
     u)
     docker-compose -f $file up -d
@@ -47,6 +47,10 @@ while getopts ":udbh" opt; do
       echo "  -b: build"
       flag=true
     ;;
+    l)
+      docker-compose -f $file logs --follow  
+      flag=true
+      ;;
     \?)
       echo "Invalid option: -$OPTARG" >&2
       exit 1

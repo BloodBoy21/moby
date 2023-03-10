@@ -27,7 +27,7 @@ flag=false
 while getopts ":lbrsdh" opt; do
   case $opt in
     l)
-      docker logs -f $id 
+      docker logs -f --color $id 
       flag=true
       ;;
     b)
