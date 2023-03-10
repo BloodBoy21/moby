@@ -6,13 +6,21 @@ if ! [ -x "$(command -v docker)" ]; then
     exit 1
 fi
 
-container=$( docker ps | awk '{print $2 ":" $1}'  | tail -n+2 |fzf)
-IFS=':' read -ra containerData <<< "$container"
-id=${containerData[1]}
+function get_id(){
+  container=$( docker ps | awk '{print $2 ":" $1}'  | tail -n+2 |fzf)
+  IFS=':' read -ra containerData <<< "$container"
+  id=${containerData[1]}
 
-if [ -z "$id" ]; then
+  if [ -z "$id" ]; then
     echo "No container selected"
     exit 1
+  fi
+}
+
+if [ "$1" != "-h" ]; then
+  get_id
+else
+  id=$1
 fi
 
 flag=false
