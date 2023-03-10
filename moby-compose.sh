@@ -1,8 +1,6 @@
 #!/bin/bash
 
 customPath=${!#}
-echo $customPath 
-
 # Check if the variable contains a directory path
 if [ -d "$customPath" ]; then
   dir=$customPath 
@@ -10,24 +8,25 @@ else
   dir="."
 fi
 
-file=$(find $dir  -type f \( -name "docker-compose*.yml" -o -name "docker-compose*.json" \) | fzf)
+function get_file(){
+  file=$(find $dir  -maxdepth 1 -type f \( -name "docker-compose*.yml" -o -name "docker-compose*.json" -o -name "docker-compose*.yaml" \) | fzf)
+  if [ -z "$file" ]; then
+      echo "No docker-compose file found"
+      exit 1
+  fi
+  #check if docker-compose is installed
+  if ! [ -x "$(command -v docker-compose)" ]; then
+      echo "docker-compose is not installed"
+      exit 1
+  fi
+}
 
-
-
-
-if [ -z "$file" ]; then
-    echo "No docker-compose file found"
-    exit 1
-fi
-
-#check if docker-compose is installed
-if ! [ -x "$(command -v docker-compose)" ]; then
-    echo "docker-compose is not installed"
-    exit 1
+if [ "$1" != "-h" ]; then
+  get_file
 fi
 
 flag=false
-while getopts ":udb" opt; do
+while getopts ":udbh" opt; do
   case $opt in
     u)
     docker-compose -f $file up -d
