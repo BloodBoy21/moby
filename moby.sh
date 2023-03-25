@@ -6,8 +6,16 @@ if ! [ -x "$(command -v docker)" ]; then
 	exit 1
 fi
 
+function get_docker_command() {
+	if [[ $1 =~ ^-([rd])$ ]]; then
+		docker_command="docker ps -a"
+	else
+		docker_command="docker ps"
+	fi
+}
+
 function get_id() {
-	container=$(docker ps | awk '{print $2 ":" $1}' | tail -n+2 | fzf)
+	container=$($docker_command | awk '{print $2 ":" $1}' | tail -n+2 | fzf)
 	IFS=':' read -ra containerData <<<"$container"
 	if [ -z "$containerData" ]; then
 		echo "No container selected"
@@ -15,12 +23,13 @@ function get_id() {
 	fi
 	id=${containerData[-1]}
 	if [ -z "$id" ]; then
-		echo "No container selected"
+		echo "Container id not found"
 		exit 1
 	fi
 }
 
 if [ "$1" != "-h" ]; then
+	get_docker_command $1
 	get_id
 fi
 
