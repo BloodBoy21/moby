@@ -8,14 +8,14 @@ fi
 
 function get_docker_command() {
 	if [[ $1 =~ ^-([rd])$ ]]; then
-		docker_command="docker ps -a"
+		docker_command="docker ps -a --format '{{.ID}}\t{{.Names}}\t{{.Image}}'"
 	else
-		docker_command="docker ps"
+		docker_command="docker ps --format '{{.ID}}\t{{.Names}}\t{{.Image}}'"
 	fi
 }
 
 function get_id() {
-	container=$($docker_command | awk '{print $2 ":" $1}' | tail -n+2 | fzf)
+	container=$($docker_command | sed 's/.$//' | sed 's/^.\(.*\)$/\1/' | awk '{print $2 "(" $3  "):" $1}' | tail -n+1 | fzf)
 	IFS=':' read -ra containerData <<<"$container"
 	if [ -z "$containerData" ]; then
 		echo "No container selected"
